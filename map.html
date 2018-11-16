@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>FATCG - HTML Bootstrap Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link href="css/animate.min.css" rel="stylesheet"> 
+	<link href="css/style.css" rel="stylesheet" />	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>	
+	<header id="header">
+        <nav class="navbar navbar-default navbar-static-top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                   <div class="navbar-brand">
+						<a href="index.html"><h1>FATCG</h1></a>
+					</div>
+                </div>				
+                <div class="navbar-collapse collapse">							
+					<div class="menu">
+						<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation"><a href="Browse.html">Browse</a></li>
+								<li role="presentation"><a href="FTA.html">FTA</a></li>
+								<li role="presentation"><a href="CTM.html">CTM</a></li>
+								<li role="presentation"><a href="Map.html" class="active">FTA & CTM</a></li>
+								<li role="presentation"><a href="Patition.html">Patition</a></li>
+								<li role="presentation"><a href="Testcase.html">Test Case</a></li>					
+						</ul>
+					</div>
+				</div>		
+            </div><!--/.container-->
+        </nav><!--/nav-->		
+    </header><!--/header-->	
+	
+
+		<div class="container">
+			<div class="text-center">
+					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:65%">
+                            65%
+                        </div>
+			</div>	
+		</div>			
+	
+	<hr>
+	
+	<section id="about-us">
+        <div class="container">	
+			<!-- our-team -->
+			<div class="team">
+				<div class>
+                    <style>
+                        table,th,td {
+                          border : 1px solid black;
+                          border-collapse: collapse;
+                        }
+                        th,td {
+                          padding: 5px;
+                        }
+                
+                        .rectangle1 {
+                  height: 25px;
+                  width: 125px;
+                  background-color: #555;
+                }
+                        .rectangle2 {
+                  height: 25px;
+                  width: 100px;
+                  background-color: #555;
+                }
+                        .rectangle3 {
+                  height: 25px;
+                  width: 50px;
+                  background-color: #555;
+                }
+                        .rectangle4 {
+                  height: 25px;
+                  width: 125px;
+                  background-color: red;
+                }
+                        .rectangle5 {
+                  height: 25px;
+                  width: 100px;
+                  background-color: red;
+                }
+                        .rectangle6 {
+                  height: 25px;
+                  width: 50px;
+                  background-color: red;
+                }
+                        </style>
+                <body>
+                    <center>
+                <table>
+            <tr><td><p id="demo"></p></td></tr>
+            </table>
+        </center>
+                <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+                
+                <script>               
+            
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        myFunction(this);
+                    }
+                };
+                xhttp.open("GET", "CFG.xml", true);
+                xhttp.send();
+                
+                function myFunction(xml) {
+                    
+                    var x, txt, xmlDoc;
+                    //var table="<tr><th>NUMBER</th><th>Type</th><th>Value</th></tr>";
+                    xmlDoc = xml.responseXML;
+                    txt = "";
+                    nodeLen = xmlDoc.getElementsByTagName("Input").length
+                    // txt = txt + "nodeLen=" + nodeLen + "<br>";
+                    txt += "Varname = Order Price"+ "<br>";
+                    txt += "Type = Range "+ "<br>";
+                    txt += "Dataset = 3 " +"<br>";
+                    //    
+                  
+                    txt+= ">1000" + "<div class='rectangle4'>"+ "</div>";
+                
+                    for(j=0;j<nodeLen;j++){
+                        x = xmlDoc.getElementsByTagName("Input")[j];
+                        xlen = x.childNodes.length;
+                
+                        y = x.firstChild;
+                       
+                        var varName, type, dataSet,invalid
+                        varName = "";
+                        type="";
+                        
+                
+                        for (i = 0; i < xlen; i++) {    
+                            if (y.nodeType == 1) {
+                                 if(y.nodeName=="Varname"){ 
+                                    varName = y.childNodes[0].nodeValue;
+                                    var tt=   " " + y.nodeName + " value = " + varName + "<br>";
+                                }
+                
+                                if(y.nodeName=="Type"){
+                                    type = y.childNodes[0].nodeValue;
+                                    var ds =   " " + y.nodeName + " value = " + type + "<br>";
+                                } 
+                                if(y.nodeName=="Dataset"){
+                                    dataSet = y.childNodes[0].nodeValue;
+                                    var dd =   " " + y.nodeName + " value = " + dataSet + "<br>";
+                                } 
+                               
+                               // for (i = 0; i < xlen; i++) { 
+                                if(y.nodeName=="Condition"){
+                                    
+                                    yAtt = y.attributes;
+                                  
+                
+                                    if((type!="")&&(type=="Range")){
+                                        // txt+=Math.floor(Math.random() *yAtt.getNamedItem("max").nodeValue)+1 +"<br>";  gentestcase
+                                        
+                                        
+                                         txt += /*" id=" + yAtt.getNamedItem("id").nodeValue +*/  yAtt.getNamedItem("min").nodeValue + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +  yAtt.getNamedItem("max").nodeValue +"<div class='rectangle1'>"+ "</div>"  ;
+                                    }else if((type!="")&&(type=="Ordinal")){
+                                        var dd =  /* " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " value=" +*/ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ yAtt.getNamedItem("value").nodeValue + "<div class='rectangle2'>"+ "</div>" ;
+                                    }
+                                }
+                                 
+                            }
+                            y = y.nextSibling;        
+                        }//end of for i
+                      
+                    }//end of for j
+                    txt+= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+"Infinity" + "<div class='rectangle4'>"+ "</div>"+"<br>"+"<br>";
+                    txt += "Varname = CustType"+"<br>";
+                    txt += "Type = Ordinal "+ "<br>";
+                    txt += "Dataset = 2 " +"<br>";
+                    for(j=0;j<nodeLen;j++){
+                        x = xmlDoc.getElementsByTagName("Input")[j];
+                        xlen = x.childNodes.length;
+                
+                        y = x.firstChild;
+                       
+                        var varName, type, dataSet,invalid
+                        varName = "";
+                        type="";
+                        
+                        
+                    
+                        for (i = 0; i < xlen; i++) {    
+                            if (y.nodeType == 1) {
+                                 if(y.nodeName=="Varname"){ 
+                                    varName = y.childNodes[0].nodeValue;
+                                    var sq=   " " + y.nodeName + " value = " + varName + "<br>";
+                                }
+                
+                                if(y.nodeName=="Type"){
+                                    type = y.childNodes[0].nodeValue;
+                                    var ss=   " " + y.nodeName + " value = " + type + "<br>";
+                                } 
+                                if(y.nodeName=="Dataset"){
+                                    dataSet = y.childNodes[0].nodeValue;
+                                    var ww =   " " + y.nodeName + " value = " + dataSet + "<br>";
+                                } 
+                               
+                               // for (i = 0; i < xlen; i++) { 
+                                if(y.nodeName=="Condition"){
+                                    
+                                    yAtt = y.attributes;
+                                  
+                
+                                    if((type!="")&&(type=="Range")){
+                                        // txt+=Math.floor(Math.random() *yAtt.getNamedItem("max").nodeValue)+1 +"<br>";  gentestcase
+                                        
+                                        
+                                         var vo = /*" id=" + yAtt.getNamedItem("id").nodeValue +*/  yAtt.getNamedItem("min").nodeValue + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +  yAtt.getNamedItem("max").nodeValue +"<div class='rectangle1'>"+ "</div>" + "  &nbsp;&nbsp;&nbsp;   " ;
+                                    }else if((type!="")&&(type=="Ordinal")){
+                                        txt +=  /* " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " value=" +*/ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ yAtt.getNamedItem("value").nodeValue + "<div class='rectangle2'>"+ "</div>" ;
+                                    }
+                                }
+                                 
+                            }
+                            y = y.nextSibling;        
+                        }//end of for i
+                      
+                    }//end of for j
+                
+                    txt+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ "none" + "<div class='rectangle5'>"+ "</div>"+"<br>"+"<br>";
+                    txt += "Varname = Total Discount"+"<br>";
+                    txt += "Type = Ordinal "+ "<br>";
+                    txt += "Dataset = 6 " +"<br>";
+                    txt+="&nbsp;&nbsp;&nbsp;"+ ">0%" + "<div class='rectangle6'>"+ "</div>";
+                    nodeLen = xmlDoc.getElementsByTagName("Output").length
+                    // txt = txt + "nodeLen=" + nodeLen + "<br>";
+                    for(j=0;j<nodeLen;j++){
+                        x = xmlDoc.getElementsByTagName("Output")[j];
+                        xlen = x.childNodes.length;
+                
+                        y = x.firstChild;
+                       
+                        
+                        for (i = 0; i < xlen; i++) {    
+                                    
+                            if (y.nodeType == 1) {
+                                if(y.nodeName=="Action"){
+                                    yAtt = y.attributes;
+                                    
+                                    txt += /*i + " " + y.nodeName +  " value="+*/ "&nbsp;&nbsp;&nbsp;"+ yAtt.getNamedItem("value").nodeValue + "<div class='rectangle3'>"+ "</div>" ;
+                                }else{
+                                    var wq=   y.nodeName + " value = " + y.childNodes[0].nodeValue + "<br>";
+                                }             
+                            }
+                            y = y.nextSibling;
+                        }//end of for i
+                        
+                    }//end of for j
+                    txt+="&nbsp;&nbsp;"+ "<35%" + "<div class='rectangle6'>"+ "</div>"+"<br>"+"<br>";
+                    document.getElementById("demo").innerHTML = txt;
+                }
+                </script>
+                </body>
+									  
+				</div>		
+			</div><!--section-->
+		</div><!--/.container-->
+    </section><!--/about-us-->
+	
+	
+	
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.js"></script>		
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>	
+	<script src="js/wow.min.js"></script>
+	<script>
+	wow = new WOW(
+	 {
+	
+		}	) 
+		.init();
+	</script>	
+  </body>
+</html>
