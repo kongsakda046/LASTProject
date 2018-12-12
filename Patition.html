@@ -73,6 +73,7 @@
                         table,th,td {
                           border : 1px solid black;
                           border-collapse: collapse;
+                          width: 60%;
                         }
                         th,td {
                           padding: 5px;
@@ -96,14 +97,132 @@
                         </style>
                 <body>
             <center>
+
+              
                   <table border="3 px">
+                        <center>
                <tr><td> <p id="demo"><p></td></tr>
+               </center>
             </table>
+            <button type="button" onclick="loadXMLDoc()">Generate</button>
         </center>
                 <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
                 
-                <script>               
-                d3
+                <script>        
+
+
+function loadXMLDoc() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+    }
+};
+xhttp.open("GET", "CFG.xml", true);
+xhttp.send();
+
+
+function myFunction(xml) {
+                    Arr=[];
+                    GetvarName=[];
+                    GetName=[];
+                    GetOrdinal=[];
+                    GetRangemax=[];
+                    GetRangemin=[];
+                    Getidcfg=[];
+                    GetValue=[];
+
+
+
+
+
+    var x, txt, xmlDoc;
+  //  var table="<tr><th>NUMBER</th><th>Type</th><th>Value</th></tr>";
+    xmlDoc = xml.responseXML;
+    txt = "";
+    nodeLen = xmlDoc.getElementsByTagName("Input").length
+    //txt = txt+ "nodeLen=" + nodeLen ;
+    for(j=0;j<nodeLen;j++){
+        x = xmlDoc.getElementsByTagName("Input")[j];
+        xlen = x.childNodes.length;
+
+        y = x.firstChild;
+       
+        var varName, type, dataSet
+        varName = "";
+        type="";
+
+        for (i = 0; i < xlen; i++) {    
+            if (y.nodeType == 1) {
+                 if(y.nodeName=="Varname"){ 
+                    varName = y.childNodes[0].nodeValue;
+                    txt+=  " " + y.nodeName + " value = " + varName + "<br>";
+               
+                }
+     
+                if(y.nodeName=="Type"){
+                    type = y.childNodes[0].nodeValue;
+                    txt+= " " + y.nodeName + " value = " + type + "<br>";
+               
+                } 
+           
+                if(y.nodeName=="Condition"){
+                    yAtt = y.attributes;
+                    if((type!="")&&(type=="Range")){
+
+
+                          txt+= " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " max="+ yAtt.getNamedItem("max").nodeValue+ " min="+ yAtt.getNamedItem("min").nodeValue + "<br>";
+                     //aไม่ได้   // Arr.push(yAtt.getElementById[i]);
+                    }else if((type!="")&&(type=="Ordinal")){
+                        txt+=  " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " value="+ yAtt.getNamedItem("value").nodeValue + "<br>";
+              
+                    }
+              
+                }
+                 
+            }
+            y = y.nextSibling;        
+        }//end of for i
+        Arr.push(txt);
+       
+        txt += "<br>";
+    }//end of for j
+    nodeLen = xmlDoc.getElementsByTagName("Output").length
+  //  txt = txt + "nodeLen=" + nodeLen + "<br>";
+    for(j=0;j<nodeLen;j++){
+        x = xmlDoc.getElementsByTagName("Output")[j];
+        xlen = x.childNodes.length;
+
+        y = x.firstChild;
+       
+
+        for (i = 0; i < xlen; i++) {            
+            if (y.nodeType == 1) {
+                if(y.nodeName=="Action"){
+                    yAtt = y.attributes;
+                    txt += i + " " + y.nodeName +  " value="+ yAtt.getNamedItem("id").nodeValue + "<br>";
+                }else{
+                    txt += i + " " + y.nodeName + " value = " + y.childNodes[0].nodeValue + "<br>";
+                  //    
+                  Arr.push( y.childNodes[0].nodeValue );
+                }             
+            }
+            y = y.nextSibling;
+      
+        }//end of for i
+        txt += "<br>";
+
+    console.log(Arr);
+    txt=txt+Arr[0]+Arr[1]+Arr[3];
+ // document.write(Arr+"<br>");
+    }//end of for j
+
+   
+    document.getElementById("demo").innerHTML = txt;
+}
+}
+
+                
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -135,32 +254,32 @@
                             if (y.nodeType == 1) {
                                  if(y.nodeName=="Varname"){ 
                                     varName = y.childNodes[0].nodeValue;
-                                    txt +=   " " + y.nodeName + " value = " + varName + "<br>";
+                                    txt +=   "<center>"+ " " + y.nodeName + " value = " + varName + "<br>";
                                 }
                 
                                 if(y.nodeName=="Type"){
                                     type = y.childNodes[0].nodeValue;
-                                    txt +=   " " + y.nodeName + " value = " + type + "<br>";
+                                    txt +=  "<center>"+  " " + y.nodeName + " value = " + type + "<br>";
                                 } 
                                 if(y.nodeName=="Dataset"){
                                     dataSet = y.childNodes[0].nodeValue;
-                                    txt +=   " " + y.nodeName + " value = " + dataSet + "<br>";
+                                    txt +=  "<center>"+  " " + y.nodeName + " value = " + dataSet + "<br>";
                                 } 
                 
                                 if(y.nodeName=="Condition"){
                                     yAtt = y.attributes;
                                     if((type!="")&&(type=="Range")){
                                         // txt+=Math.floor(Math.random() *yAtt.getNamedItem("max").nodeValue)+1 +"<br>";  gentestcase
-                                         txt += /*" id=" + yAtt.getNamedItem("id").nodeValue +*/ "<br>"+ yAtt.getNamedItem("min").nodeValue + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +  yAtt.getNamedItem("max").nodeValue +"<div class='rectangle1'>"+ "</div>" + "  &nbsp;&nbsp;&nbsp;   " ;
+                                         txt += /*" id=" + yAtt.getNamedItem("id").nodeValue +*/ "<br>"+ yAtt.getNamedItem("min").nodeValue + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +  yAtt.getNamedItem("max").nodeValue +"<div class='rectangle1'>"+ "</div>" + "  &nbsp;&nbsp;&nbsp;   " ;
                                     }else if((type!="")&&(type=="Ordinal")){
-                                        txt +=  /* " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " value=" +*/ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ yAtt.getNamedItem("value").nodeValue + "<div class='rectangle2'>"+ "</div>" +"<br>";
+                                        txt += "<center>"+ /* " " + y.nodeName +  " id="+ yAtt.getNamedItem("id").nodeValue + " value=" +*/ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ yAtt.getNamedItem("value").nodeValue + "<div class='rectangle2'>"+ "</div>";
                                     }
                                 }
                                  
                             }
                             y = y.nextSibling;        
                         }//end of for i
-                        txt += "<br>";
+                              txt += "";
                     }//end of for j
                     
                      
