@@ -321,12 +321,12 @@
                                     "icon": "Square.png",
                                     "level": "red",
                                     "children": [{
-                                      "Varname": "<"+GetRange[0],
+                                      "Varname": "price"+"<"+GetRange[0],
                                       "icon": "OP.PNG",
                                       "level": "red"
                                       },
                                       {
-                                        "Varname":">"+GetRange[5],
+                                        "Varname":"price"+">"+GetRange[5],
                                       "icon": "OP.PNG",
                                       "level": "red"
                                       }
@@ -339,7 +339,7 @@
                                     "icon": "Square.png",
                                     "level": "red",
                                     "children": [{
-                                      "Varname": "null",
+                                      "Varname": Getname[2]+"="+"null",
                                       "icon": "OP.PNG",
                                       "level": "red"
                                       
@@ -365,9 +365,12 @@
                             "level": "green",
                            
                             "children": [{
-                                      "Varname":"",
+                                      "Varname":Getname[0]+"="+GetRange[0]+"-"+GetRange[1]+
+                                      "&&"+Getname[2]+"="+Getvalue[1],
+                            
                                       "icon": "OP.PNG",
-                                      "level": "green"
+                                      "level": "green",
+                                      
                                       
                                     
 

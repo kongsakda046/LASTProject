@@ -107,13 +107,29 @@
       </head>
     
       <body>
-    
+        <p align="left"><font size="6px"><b>Classification Tree Result</b></font></p>
     <!-- load the d3.js library -->	
     <script src="http://d3js.org/d3.v3.min.js"></script>
         
     <script>
     
-
+    Alldata=[];
+                    console.log(Alldata);
+                    
+                    
+                      var xmlhttp = new XMLHttpRequest();
+                      xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          myFunction(this);
+                        }
+                      };
+                      xmlhttp.open("GET","DecisionTree.xml", true);
+                      xmlhttp.send(); 
+                      xmlhttp.open("GET","CFG.xml", true);
+                      xmlhttp.send();
+                    function myFunction(xml){
+                    
+       
     var xmlhttp = new XMLHttpRequest();
                       xmlhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
@@ -123,22 +139,122 @@
                       xmlhttp.open("GET","CFG.xml", true);
                       xmlhttp.send();
                     function myFunction(xml){
-                    
-                      var i;
-                      var xmlDoc = xml.responseXML;
-                     
-                      var Des = xmlDoc.getElementsByTagName("DecisionTree");
-                      var x = xmlDoc.getElementsByTagName("Input");
-                    
-                    x4 = xmlDoc.getElementsByTagName('Condition');
-                    
-                    var max=x4[0].getAttribute('max');
-                        var min=x4[0].getAttribute('min');
-                        var prete=x4[3].getAttribute('value');
-                        var preto=x4[4].getAttribute('value');
-            
+ 
+                        xmlDoc = xml.responseXML;
+    txt = "";
+    nodeLen = xmlDoc.getElementsByTagName("Input").length
+    Getname=[];
+    GetRange=[];
+    Getvalue=[];
+
+                        for(j=0;j<nodeLen;j++){
+        x = xmlDoc.getElementsByTagName("Input")[j];
+        xlen = x.childNodes.length;
+
+        y = x.firstChild;
+       
+        var varName, type, dataSet
+        varName = "";
+        type="";
+
+        for (i = 0; i < xlen; i++) {    
+            if (y.nodeType == 1) {
+                 if(y.nodeName=="Varname"){ 
+                    varName = y.childNodes[0].nodeValue;
+                    name1 =   y.nodeName ;
+
+                    console.log(varName)
+                    Getname.push(varName);
+                
+                }
+     
+                if(y.nodeName=="Type"){
+                    type = y.childNodes[0].nodeValue;
+                    Getname.push(type);
+               
+                } 
+           
+                if(y.nodeName=="Condition"){
+                    yAtt = y.attributes;
+                    if((type!="")&&(type=="Range")){
+
+                    Ragearrmin=  yAtt.getNamedItem("min").nodeValue;
+                    Ragearrmax=  yAtt.getNamedItem("max").nodeValue
+                    GetRange.push(Ragearrmin);
+                    GetRange.push(Ragearrmax);
+                    }else if((type!="")&&(type=="Ordinal")){
+                percent=yAtt.getNamedItem("value").nodeValue ;
+
+                Getvalue.push(percent);
+                    }
+              
+                }
+                 
+            }
+            y = y.nextSibling;        
+        }//end of for i
+    
+       
+        txt += "<br>";
+    }//end of for j
+
+    nodeLen = xmlDoc.getElementsByTagName("Output").length
+    txt = txt + "nodeLen=" + nodeLen + "<br>";
+    for(j=0;j<nodeLen;j++){
+        x = xmlDoc.getElementsByTagName("Output")[j];
+        xlen = x.childNodes.length;
+
+        y = x.firstChild;
+       
+
+        for (i = 0; i < xlen; i++) {            
+            if (y.nodeType == 1) {
+                if(y.nodeName=="Action"){
+                    yAtt = y.attributes;
+                    percent =  yAtt.getNamedItem("value").nodeValue 
+                    test =  yAtt.getNamedItem("id").nodeValue ;
+                    Getvalue.push(percent);    
+                    console.log(test);
+                }else{
+                    y.nodeName;  
+                    varName= y.childNodes[0].nodeValue ;
+                    Getname.push(varName);    
+                 
+                }             
+            }
+            y = y.nextSibling;
+      
+        }//end of for i
+        txt += "<br>";
 
 
+ // document.write(Arr+"<br>");
+    }//end of for j
+    console.log(Getname);
+    console.log(GetRange);
+    console.log(Getvalue);
+
+                    
+                    
+                    
+                        
+                    
+                    
+    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
 
 
@@ -152,23 +268,23 @@
   "children": [
         {
            
-            "name": "Order Price",
+            "name": Getname[0],
             "ID":"1",
             "parent": false,
             "children":[{
-                "name": "Range",
+                "name": Getname[1],
                "parent":true ,
                "children":[
                 { 
-                    "name": "1000 - 2499", 
+                    "name":GetRange[0]+"-"+GetRange[1], 
                     "parent":true
                 },
                 { 
-                    "name": "2500 - 4999", 
+                    "name": GetRange[2]+"-"+GetRange[3], 
                     "parent":true
                 },
                 { 
-                    "name": "5000-999999", 
+                    "name": GetRange[4]+"-"+GetRange[5], 
                     "parent":true
 
                }]
@@ -178,18 +294,18 @@
                
         },
         {
-            "name": "CustType",
+            "name": Getname[2],
             "parent": false,
             "children":[{
-                "name": "Ordinal",
+                "name": Getname[3],
                "parent":true ,
                "children":[
                 { 
-                    "name": "Silver", 
+                    "name": Getvalue[0], 
                     "parent":true
                 },
                 { 
-                    "name": "Gold", 
+                    "name": Getvalue[1], 
                     "parent":true
                 }
             ]
@@ -199,35 +315,35 @@
 
         },
         {
-            "name": "Total Discount",
+            "name": Getname[4],
             "parent": false,
             "children":[{
-                "name": "Ordinal",
+                "name": Getname[5],
                "parent":true ,
                "children":[
                 { 
-                    "name": "5", 
+                    "name": Getvalue[2], 
                     "parent":true
                 },
                 { 
-                    "name": "10", 
+                    "name": Getvalue[3], 
                     "parent":true
                 },
                 { 
-                    "name": "15", 
+                    "name": Getvalue[4], 
                     "parent":true
                 },
                 { 
-                    "name": "20", 
+                    "name": Getvalue[5], 
                     "parent":true
                 },
                 { 
-                    "name": "25", 
+                    "name": Getvalue[6], 
                     "parent":true
 
                },
                 { 
-                    "name": "30", 
+                    "name": Getvalue[7], 
                     "parent":true
 
                }]
@@ -374,6 +490,7 @@
     }
 }
     
+                    }
     </script>
         
       </body>

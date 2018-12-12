@@ -70,22 +70,32 @@
                     <!DOCTYPE html>
                     <html>
                             <style>
-                            table,th,td {
+                            table {
                               border : 1px solid black;
                               border-collapse: collapse;
-                              
-                             background-color:#000033;
-                            font-size:15px;
-                             color:white;
-
+                              color:#000000;
+                              width: 50%;
+	                        font-size:15px;
                             }
                             th {
-                                 padding-top: 12px;
-                                padding-bottom: 12px;
-                                text-align: left;
-                                background-color: #4CAF50;
-                                color: white;
-                             }
+                                padding-top: 5px;
+                               padding-bottom: 12px;
+                               text-align: center;
+                               background-color: #333333;
+                               color: white;
+                            }
+
+
+                            td{
+                                border : 1px solid black;
+                              border-collapse: collapse;
+                              color:#000000;
+	                        font-size:15px;
+                              text-align: center;
+                            }
+                            tr:nth-child(even){background-color: #f2f2f2;}
+                            
+                            tr:hover {background-color: #ddd;}
                             
                     
                            
@@ -97,7 +107,9 @@
 <div>
                             <table id="demo"></table>
                         </div>
+                        <br><br>
                             <button type="button" onclick="loadXMLDoc()">Test Case Generation</button>
+                            <br><br>
                             <table id="xteam"></table>
 
                             
@@ -113,7 +125,7 @@
 
 
 //buttom
-  function loadXMLDoc() {
+
 
    var  Getdatasetin=[];
     var ConditionTree2=[];
@@ -175,11 +187,6 @@ for(var x=0;x<Decision.length;x++){
 
 
 
-
-
-
-
-
         var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -187,7 +194,7 @@ for(var x=0;x<Decision.length;x++){
                     }
                 };
                 xhttp.open("GET", "CFG.xml", true);
-                xhttp.send();
+                xhttp.send();   
                 
                 function myFunction(xml) {
                     
@@ -388,7 +395,7 @@ Alldatacfg.push();
 
 
 
-               table="<tr><th>"+"ID"+"</th><th>"+"Price"+"</th><th>"+"customertype"+"</th><th>"+"Percent"+"</th></tr>";
+            table="<tr><th>"+"ID"+"</th><th>"+"Price"+"</th><th>"+"Customer Type"+"</th><th>"+"Percent"+"</th></tr>";
                 for(var te=0;te<DecisionTree.length;te++){
                     var whater=te;
                     var countme= ConditionTree[whater]-1;
@@ -396,11 +403,21 @@ Alldatacfg.push();
                    var countwas= ConditionTree2[whater]-1;
                    
                    //console.log(countwas);
-                    table+="<tr><td>"+DecisionTree[te][0]+"</td><td>"+x4[countme].getAttribute("min")+"--"+x4[countme].getAttribute("max")+"</td><td>"+x4[countwas].getAttribute("value")+"</td><td>"+x5[te].getAttribute("value")+"</td></tr>";
+                    table+="<tr><td width='5%'>"+DecisionTree[te][0]+"</td><td width='25%'>"+x4[countme].getAttribute("min")+"--"+x4[countme].getAttribute("max")+"</td><td width='15%'>"+x4[countwas].getAttribute("value")+"</td><td width='5%'>"+x5[te].getAttribute("value")+"</td></tr>";
 
                 }
                     document.getElementById("demo").innerHTML = table;
                 }
+
+
+
+
+
+
+
+
+
+                function loadXMLDoc() {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -583,7 +600,7 @@ Alldatacfg.push();
 
 
 
-               table="<tr><td>"+"ID"+"</td><td>"+"Price"+"</td><td>"+"customertype"+"</td><td>"+"Percent"+"</td><td>"+"Status"+"</td></tr>";
+               table="<tr><th>"+"ID"+"</th><th>"+"Price"+"</th><th>"+"customertype"+"</th><th>"+"Percent"+"</th><th>"+"Status"+"</th></th>";
                var gap=[];
                var smin=99999999, smax=-99999999;
                var whater=0;
